@@ -33,7 +33,9 @@
    </table>
 {% endmacro %}
 
-{{ render_endpoints(raw_endpoints) }}
+{% if raw_endpoints %}
+   {{ render_endpoints(raw_endpoints) }}
+{% endif %}
 
 {% for name, endpoints in blueprints.iteritems() %}
    <h4>{{ name }}</h4>
