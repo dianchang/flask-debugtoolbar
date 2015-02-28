@@ -27,20 +27,34 @@ class RoutesDebugPanel(DebugPanel):
     def content(self):
         context = self.context.copy()
         blueprints = {}
+        raw_endpoints = {}
         for endpoint, _rules in current_app.url_map._rules_by_endpoint.iteritems():
             if any(item in endpoint for item in ['_debug_toolbar', 'debugtoolbar', 'static']):
                 continue
-            blueprint_name = endpoint.split('.')[0]
-            if not blueprint_name in blueprints:
-                blueprints[blueprint_name] = {}
+
             for rule in _rules:
                 rule.methods = sorted(filter(lambda x: x not in ['HEAD', 'OPTIONS'], rule.methods))
-            blueprints[blueprint_name][endpoint] = _rules
+
+            if '.' in endpoint:
+                blueprint_name = endpoint.split('.')[0]
+                if not blueprint_name in blueprints:
+                    blueprints[blueprint_name] = {}
+                blueprints[blueprint_name][endpoint] = _rules
+            else:
+                raw_endpoints[endpoint] = _rules
         # Reorder
         blueprints = OrderedDict(sorted(blueprints.iteritems()))
         for key in blueprints.keys():
             blueprints[key] = OrderedDict(sorted(blueprints[key].iteritems()))
+        raw_endpoints = OrderedDict(sorted(raw_endpoints.iteritems()))
         context.update({
-            'blueprints': blueprints
+            'blueprints': blueprints,
+            'raw_endpoints': raw_endpoints
         })
         return self.render('panels/routes.html', context)
+
+
+def remove_http_methods(rules):
+    """Do not show HEAD, OPTION methods."""
+    for rule in rules:
+        rule.methods = sorted(filter(lambda x: x not in ['HEAD', 'OPTIONS'], rule.methods))

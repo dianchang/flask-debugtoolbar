@@ -1,5 +1,4 @@
-{% for name, endpoints in blueprints.iteritems() %}
-   <h4>{{ name }}</h4>
+{% macro render_endpoints(endpoints) %}
    <table>
       <thead>
       <tr>
@@ -32,4 +31,11 @@
       {% endfor %}
       </tbody>
    </table>
+{% endmacro %}
+
+{{ render_endpoints(raw_endpoints) }}
+
+{% for name, endpoints in blueprints.iteritems() %}
+   <h4>{{ name }}</h4>
+   {{ render_endpoints(endpoints) }}
 {% endfor %}
