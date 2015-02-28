@@ -5,7 +5,7 @@ This is a port of the excellent `django-debug-toolbar <https://github.com/django
 for Flask applications.
 
 .. image:: https://travis-ci.org/mgood/flask-debugtoolbar.png?branch=master
-   :target: https://travis-ci.org/mgood/flask-debugtoolbar
+:target: https://travis-ci.org/mgood/flask-debugtoolbar
 
 
 Installation
@@ -13,7 +13,7 @@ Installation
 
 Installing is simple with pip::
 
-    $ pip install flask-debugtoolbar
+    $ pip install git+git://github.com/hustlzp/flask-debugtoolbar#egg=flask_debugtoolbar
 
 
 Usage
