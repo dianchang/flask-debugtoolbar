@@ -1,0 +1,35 @@
+{% for name, endpoints in blueprints.iteritems() %}
+   <h4>{{ name }}</h4>
+   <table>
+      <thead>
+      <tr>
+         <th>Endpoint</th>
+         <th>URL</th>
+         <th>Methods</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for endpoint, rules in endpoints.iteritems() %}
+         <tr class="{{ loop.cycle('flDebugOdd', 'flDebugEven') }}">
+            <td>{{ endpoint }}</td>
+            <td>
+               {% for rule in rules %}
+                  {% if not loop.first %}
+                     <br/>
+                  {% endif %}
+                  {{ rule.rule }}
+               {% endfor %}
+            </td>
+            <td>
+               {% for rule in rules %}
+                  {% if not loop.first %}
+                     <br/>
+                  {% endif %}
+                  {{ ', '.join(rule.methods) }}
+               {% endfor %}
+            </td>
+         </tr>
+      {% endfor %}
+      </tbody>
+   </table>
+{% endfor %}

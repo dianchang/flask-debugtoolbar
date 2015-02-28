@@ -32,7 +32,7 @@ def _printable(value):
         return decode_text(repr(value))
     except Exception as e:
         return '<repr(%s) raised %s: %s>' % (
-               object.__repr__(value), type(e).__name__, e)
+            object.__repr__(value), type(e).__name__, e)
 
 
 class DebugToolbarExtension(object):
@@ -98,6 +98,7 @@ class DebugToolbarExtension(object):
                 'flask_debugtoolbar.panels.sqlalchemy.SQLAlchemyDebugPanel',
                 'flask_debugtoolbar.panels.logger.LoggingPanel',
                 'flask_debugtoolbar.panels.profiler.ProfilerDebugPanel',
+                'flask_debugtoolbar.panels.routes.RoutesDebugPanel',
             ),
         }
 
@@ -114,7 +115,7 @@ class DebugToolbarExtension(object):
         # if we provide automatic options for this URL and the
         # request came with the OPTIONS method, reply automatically
         if getattr(rule, 'provide_automatic_options', False) \
-           and req.method == 'OPTIONS':
+                and req.method == 'OPTIONS':
             return app.make_default_options_response()
 
         # otherwise dispatch to the handler for that endpoint
